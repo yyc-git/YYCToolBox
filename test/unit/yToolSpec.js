@@ -240,7 +240,7 @@ describe("YTool.js", function () {
             });
             it("转换为dom对象", function () {
                 expect(tool.judge.isDom(convert.toDom(document.createElement("div")))).toBeTruthy();
-                expect(tool.judge.isDom(convert.toDom($("div")))).toBeTruthy();
+                expect(tool.judge.isDom(convert.toDom($("<div></div>")))).toBeTruthy();
                 expect(tool.judge.isDom(convert.toDom("<div>a</div>"))).toBeTruthy();
             });
         });
@@ -373,7 +373,7 @@ describe("YTool.js", function () {
             it("获得指定的js文件的加载目录", function () {
                 //resultPath形如"../script/myTool/tool/"
 
-                var resultPath = path.getJsDir("YTool.js");
+                var resultPath = path.getJsDir("yTool.js");
 
                 expect(resultPath).toBeString();
                 expect(resultPath).not.toContain("YTool.js");
