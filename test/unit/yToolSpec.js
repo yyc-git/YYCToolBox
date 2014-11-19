@@ -1,7 +1,7 @@
-describe("YTool.js", function () {
+describe("YTool", function () {
     var tool = YYC.Tool;
 
-    describe("convert.js", function () {
+    describe("convert", function () {
         var convert = tool.convert;
 
         //describe("strToBool", function () {
@@ -246,7 +246,7 @@ describe("YTool.js", function () {
         });
     });
 
-    describe("date.js", function () {
+    describe("date", function () {
         var date = tool.date;
 
         describe("format", function () {
@@ -282,7 +282,7 @@ describe("YTool.js", function () {
         });
     });
 
-    describe("math.js", function () {
+    describe("math", function () {
         var math = tool.math;
 
         describe("getDecimal", function () {
@@ -366,7 +366,7 @@ describe("YTool.js", function () {
         });
     });
 
-    describe("path.js", function () {
+    describe("path", function () {
         var path = tool.path;
 
         describe("getJsDir", function () {
@@ -382,7 +382,7 @@ describe("YTool.js", function () {
     });
 
 
-    describe("table.js", function () {
+    describe("table", function () {
         var table = tool.table;
 
         //beforeEach(function () {
@@ -441,7 +441,7 @@ describe("YTool.js", function () {
         });
     });
 
-    describe("extend.js", function () {
+    describe("extend", function () {
         var extend = tool.extend;
 
         beforeEach(function () {
@@ -505,7 +505,7 @@ describe("YTool.js", function () {
         });
     });
 
-    describe("namespace.js", function () {
+    describe("namespace", function () {
         function clearNamespace(space, reserveSpace) {
             var i;
 
@@ -607,6 +607,57 @@ describe("YTool.js", function () {
         });
     });
 
-    describe("asyn.js", function () {
+    describe("asyn", function () {
+    });
+
+    describe("array", function(){
+        var array = tool.array;
+        
+        beforeEach(function(){
+        });
+        afterEach(function(){
+        });
+
+        describe("getNoRepeatArr", function () {
+            it("去掉数组的重复数据", function () {
+                var arr = [
+                    [1, 2],
+                    [1, 1],
+                    [1, 2],
+                    [1, 1],
+                    [3, 3],
+                    [1, 2]
+                ];
+
+                var result = array.getNoRepeatArr(arr, function (a, b) {
+                    return a[0] === b[0] && a[1] === b[1];
+                });
+
+                expect(result).toEqual([
+                    [1, 2],
+                    [1, 1],
+                    [3, 3]
+                ]);
+            });
+        });
+
+        describe("getMaxRepeatEleNum", function () {
+            it("获得数组中重复的最多的元素的个数", function () {
+                var arr = [
+                    [1, 2],
+                    [0, 0],
+                    [0, 0],
+                    [0, 0],
+                    [1, 2],
+                    [2, 4]
+                ];
+
+                var num = array.getMaxRepeatEleNum(arr, function (a, b) {
+                    return a[0] === b[0] && a[1] === b[1];
+                });
+
+                expect(num).toEqual(3);
+            });
+        });
     });
 });
