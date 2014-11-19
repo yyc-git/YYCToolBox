@@ -13,8 +13,7 @@
         "bower_components",
         "test",
         "node_modules",
-        "bower.json",
-        "gruntfile.js",
+        "Gruntfile.js",
         "package.json",
         "README.md"
     ],
