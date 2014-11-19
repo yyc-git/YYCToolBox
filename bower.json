@@ -15,6 +15,7 @@
         "node_modules",
         "Gruntfile.js",
         "package.json",
+        ".gitignore",
         "README.md"
     ],
     "keywords": [
