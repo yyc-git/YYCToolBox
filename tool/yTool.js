@@ -1017,7 +1017,7 @@
         return {
             /*在当前鼠标位置的右边显示层*/
             showDivInRightPosition: function (e, id) {
-                var position = Tool.posiiton.mousePosition(e);
+                var position = Tool.posiiton.getMousePosition(e);
 
                 var top = position.y;
                 var left = position.x;
@@ -1652,39 +1652,70 @@
              如收件人：yang11,yang11,111111
              此处yang11重复！
              */
-            repeat: function (array) {
-                var new_array = array,
+            hasRepeatItem: function (array, isEqual) {
+                var new_array = this.extendDeep(array),
+                    isEqual = isEqual || function (a, b) {
+                        return a === b;
+                    },
                     first = null;
-                /*
-                 如果为第一次调用（即不是递归调用的），
-                 就赋值原数组array，并使new_array指向新数组。
-                 这样可防止修改原数组array（如删除元素）
-                 */
-                if (!arguments[1]) {
-                    new_array = this.clone(array);
-                }
 
-                if (new_array.length == 0) {
-                    return false;
-                }
-
-                first = new_array[0];
-
-                /*判断数组是否有重复的第一个元素*/
-                for (var i = 1; i < new_array.length; i++) {
-                    if (first == new_array[i]) {
-                        return true;    //退出for循环，返回函数返回值true
+                function _judge(array){
+                    if (array.length == 0) {
+                        return false;
                     }
-                    else {
-                        continue;
+
+                    first = array[0];
+
+                    /*判断数组是否有重复的第一个元素*/
+                    for (var i = 1; i < array.length; i++) {
+                        if (isEqual(first, array[i])) {
+                            return true;    //退出for循环，返回函数返回值true
+                        }
+                        else {
+                            continue;
+                        }
                     }
+                    array.shift();  //删除数组第一个元素
+
+                    return arguments.callee(array);
                 }
-                new_array.shift();  //删除数组第一个元素
-                /*
-                 递归，判断数组其他元素是否重复
-                 注意：此处要用return！
-                 */
-                return this.repeat(new_array, "next");
+
+                return _judge(new_array);
+            },    /*
+             判断数组中是否有重复项，有即返回true，否则返回false
+             发送给多人时，判断是否重复发给同一人
+             如收件人：yang11,yang11,111111
+             此处yang11重复！
+             */
+            hasRepeatItem: function (array, isEqual) {
+                var new_array = Tool.extend.extendDeep(array),
+                    isEqual = isEqual || function (a, b) {
+                        return a === b;
+                    },
+                    first = null;
+
+                function _judge(array){
+                    if (array.length == 0) {
+                        return false;
+                    }
+
+                    first = array[0];
+
+                    /*判断数组是否有重复的第一个元素*/
+                    for (var i = 1; i < array.length; i++) {
+                        if (isEqual(first, array[i])) {
+                            return true;
+                        }
+                        else {
+                            continue;
+                        }
+                    }
+                    array.shift();
+
+                    return arguments.callee(array);
+                }
+
+                return _judge(new_array);
             },
             /*返回一个新的数组，元素与array相同（地址不同）*/
             clone: function (array) {
@@ -2342,7 +2373,7 @@
              //360下y坐标有问题！！
 
              */
-            mousePosition: function (ev) {
+            getMousePosition: function (ev) {
                 /*
                  这段代码不兼容360
 
@@ -2385,7 +2416,7 @@
                 return point;
 
             },
-            //获得obj到指定的被定为了的祖先元素parentObj的距离
+            //获得obj到指定的祖先元素parentObj的距离
             getToParentOffset: function (obj, parentObj) {
                 var left = 0, top = 0, position = null,
                     obj = $(obj),

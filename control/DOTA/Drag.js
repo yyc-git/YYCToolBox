@@ -1,20 +1,20 @@
 /***********************************************
-来自：
+ 来自：
 
  Dota.Drag.js v0.1
  日期：2009.09.15
  修改自cloudgamer的Drag.js
 
 
-修改：
+ 修改：
 
-作者：YYC
-电子邮箱：395976266@qq.com
-QQ: 395976266
-日期：2012-10-31
-博客：http://www.cnblogs.com/chaogex/
+ 作者：YYC
+ 电子邮箱：395976266@qq.com
+ QQ: 395976266
+ 日期：2012-10-31
+ 博客：http://www.cnblogs.com/chaogex/
 
-************************************************/
+ ************************************************/
 
 //if (typeof YYC == "undefined" || !YYC) {
 //    window.YYC = {};
@@ -42,9 +42,12 @@ YYC.namespace("Control").Drag = function (dragElement, config) {
         lock: false, //是否锁定
         transparent: true, //拖动时是否半透明
         cancelBubble: true, //取消冒泡
-        onStart: function () { }, //开始移动时执行
-        onMove: function () { }, //移动时执行
-        onStop: function () { } //结束移动时执行
+        onStart: function () {
+        }, //开始移动时执行
+        onMove: function () {
+        }, //移动时执行
+        onStop: function () {
+        } //结束移动时执行
     }, config || {});
 
     //如果this.config.handler为jquery对象，则转化为dom对象
@@ -92,8 +95,8 @@ YYC.Control.Drag.prototype = {
         }
         //        var evt = YYC.Tool.event.getEvent();
         var evt = oEvent;
-        this._x = evt.pageX - evt.offsetLeft;
-        this._y = evt.pageY - evt.offsetTop;
+        this._x = evt.pageX - $(evt.target).offset().left;
+        this._y = evt.pageY - $(evt.target).offset().top;
 
         //        console.log(this._x, this._y);
 
@@ -146,7 +149,7 @@ YYC.Control.Drag.prototype = {
         //        console.log(arguments[0].pageX);
         var cfg = this.config,
         //			evt = YYC.Tool.event.getEvent();
-evt = oEvent;
+            evt = oEvent;
         //        console.log(evt);
         //        var x = evt.pageX, y = evt.pageY, o, c;
 

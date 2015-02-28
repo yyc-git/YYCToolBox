@@ -26,34 +26,36 @@ QQ: 395976266
                     this._array.push(str);
                 }
             },
-            format: function (s, pars) {
-                if (!s) {
-                    return "";
-                }
-                if (pars === null || pars === undefined) {
-                    return s;
-                }
+                format: function (s, pars) {
+                    var i = 0, 
+                        j = 0, 
+                        len = 0,
+                        args = null;
+                    
+                    if (!s) {
+                        return "";
+                    }
+                    if (pars === null || pars === undefined) {
+                        return s;
+                    }
 
-                var i = 0, j = 0, len = 0;
-                var args = null;
-
-                if (YYC.Tool.judge.isArray(pars)) {
-                    args = pars;
-                }
-                else {
-                    args = Array.prototype.slice.call(arguments, 1);
-                }
-
-                for (i = 0, len = args.length; i < len; i++) {
-                    if (YYC.Tool.judge.isFunction(args[i])) {
-                        s = s.replace(new RegExp("\\\{" + (j++) + "\\\}", "g"), YYC.Tool.func.getFunctionName(args[i]));
+                    if (YYC.Tool.judge.isArray(pars)) {
+                        args = pars;
                     }
                     else {
-                        s = s.replace(new RegExp("\\\{" + (j++) + "\\\}", "g"), args[i].toString());
+                        args = Array.prototype.slice.call(arguments, 1);
                     }
-                }
-                return s;
-            },
+
+                    for (i = 0, len = args.length; i < len; i++) {
+                        if (YYC.Tool.judge.isFunction(args[i])) {
+                            s = s.replace(new RegExp("\\\{" + (j++) + "\\\}", "g"), YYC.Tool.func.getFunctionName(args[i]));
+                        }
+                        else {
+                            s = s.replace(new RegExp("\\\{" + (j++) + "\\\}", "g"), args[i].toString());
+                        }
+                    }
+                    return s;
+                },
             toString: function (joinGap) {
                 var gap = joinGap || "";
 
