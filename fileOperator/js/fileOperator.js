@@ -6,7 +6,7 @@
  * 博客：http://www.cnblogs.com/chaogex/
  */
 (function () {
-    YYC.namespace("Html5").file = {
+    window.fileOperator = {
         /**
          * Copyright 2013 - Eric Bidelman
          *
@@ -217,7 +217,7 @@
             }
 
             if (file) {
-                var read = new FileReader();  //创建filereader对象
+                var reader = new FileReader();  //创建filereader对象
 //                console.log(file_obj.type);
 
 //                if (type === "text") {
@@ -225,18 +225,18 @@
 //                    read.readAsText(file, 'UTF-8');
 //                }
                 if (/image/.test(file.type)) {
-                    read.readAsDataURL(file);
+                    reader.readAsDataURL(file);
                 }
                 else {
 //                    console.log("type:", file.type, file.type === "");
                     //json文件类型为空字符""，文本文件类型为text/plain
-                    read.readAsText(file, 'UTF-8');
+                    reader.readAsText(file, 'UTF-8');
                 }
 
                 //增加file属性，使得在onload中，可通过this.file来获得上传的file对象
-                read.file = file;
+                reader.file = file;
                 //文件载入完毕时执行onload
-                read.onload = onload;
+                reader.onload = onload;
             }
         },
         /** 创建文件，写入value，下载到客户端
@@ -298,6 +298,7 @@
 //            anchor.dispatchEvent(evt);
                 tool.event.triggerEvent(anchor, "click");
 
+                //window.URL.revokeObjectURL(anchor.href);
                 document.body.removeChild(anchor);
             }
             else if (navigator.msSaveBlob) {
