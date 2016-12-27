@@ -2169,7 +2169,7 @@
 
                 var portionArr = numStr.split('.');
 
-                if (numStr.contain("e")) {
+                if (numStr.indexOf("e") > -1) {
                     return NaN;
                 }
 
